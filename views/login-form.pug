@@ -1,0 +1,31 @@
+doctype html
+html(lang="es")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width,initial-scale=1")
+		title= title
+		link(rel='stylesheet', href="/stilos.css")
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
+	body
+		section.container
+			h1.header= title
+			if(message)
+				div.error= message
+			article.item
+				.container
+					form.form-group(method="post", action="/login")
+						.form-group.row
+							label.col-sm-2.col-form-label(for='inputEmail3') Usuario
+							.col-sm-10
+								input#inputEmail3.form-control(type='text', name= "username", placeholder='Username', required)
+						.form-group.row
+							label.col-sm-2.col-form-label(for='inputPassword3') Contraseña
+							.col-sm-10
+								input#inputPassword3.form-control(type='password', name= "password", placeholder='Password', required)
+						.form-group.row
+							.offset-sm-2.col-sm-10
+								button.btn.btn-primary(type='submit' value= "loguearse") Entrar
+						.form-group.row
+							.offset-sm-2.col-sm-10
+								a.btn.btn-primary(href="/signin") Registrarse
+

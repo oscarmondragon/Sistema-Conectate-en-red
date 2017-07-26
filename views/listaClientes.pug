@@ -1,0 +1,58 @@
+extends layout.pug
+block content
+  
+  section.container
+    h1.header= title
+    article.item
+      div
+        a.button.add(href="/agregar-cliente") Agregar
+        
+      if(data.length)
+        table.table.table-striped.table-bordered.table-hover.table-responsive
+          thead
+            tr.table-active
+              th #
+              th Nombre
+              th Lugar
+              th IP internet
+              th IP dispositivo
+              th Paga
+              th Pagos
+              th Base
+              th MAC
+              th Equipo
+              th Modalidad
+              th Canal
+              th Inscripción
+              th
+              th
+          tbody      
+            -var counter = 0;
+            each cliente in data
+              tr
+                th(scope="row")= counter++
+                td #{cliente.name}
+                td #{cliente.address}
+                td #{cliente.ipInternet}
+                td #{cliente.ipDevice}
+                td #{cliente.fee}
+                td #{cliente.fees}
+                td #{cliente.base}
+                td #{cliente.mac}
+                td #{cliente.deviceType}
+                td #{cliente.modality}
+                td #{cliente.channel}
+                td #{cliente.startDate}
+                td 
+                  a.button.edit(href="/editar/" + cliente._id) Editar
+                td
+                  form(method="post", action="/eliminar/" + cliente._id)
+                    input.button.delete(type="button", value="Eliminar", onclick="eliminar(this)")
+                    input(type="hidden", name="_method", value="DELETE")
+        script.
+          function eliminar(input) {
+            var deleteOk = confirm('¿Estás seguro de eliminar este registro?');
+            return (deleteOk) ? input.parentNode.submit() : false;
+          }
+      else
+        div.error No tienes contactos que mostrar

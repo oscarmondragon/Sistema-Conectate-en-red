@@ -1,0 +1,33 @@
+extends layout.pug
+
+block content
+	section.container
+		h1.header= title
+		article.item
+			form.form(method="post", action="/clientes")
+				fieldset
+					div
+						input(type="text", name="name", placeholder="Nombre", required)
+					div
+						input(type="text", name="address", placeholder="Lugar", required)
+					div
+						input(type="text", name="ipInternet", placeholder="IP de internet", required)
+					div
+						input(type="text", name="ipDevice", placeholder="IP del equipo", required)
+					div
+						input(type="text", name="fee", placeholder="¿Cuanto Paga?", required)
+					div
+						input(type="text", name="base", placeholder="Base conectado", required)
+					div
+						input(type="text", name="mac", placeholder="Direccion MAC", required)
+					div
+						input(type="text", name="deviceType", placeholder="Tipo de equipo", required)
+					div
+						input(type="text", name="modality", placeholder="Modalidad", required)
+					div
+						input(type="text", name="channel", placeholder="Canal", required)
+					div
+						input(type="text", name="startDate", placeholder="Fecha de inicio", required)
+					div
+						input.button.add(type="submit", value="Agregar")
+		a.button.show(href="/clientes") Inicio
