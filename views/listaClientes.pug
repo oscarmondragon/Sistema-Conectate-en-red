@@ -1,58 +1,127 @@
 extends layout.pug
 block content
-  
-  section.container
-    h1.header= title
-    article.item
-      div
-        a.button.add(href="/agregar-cliente") Agregar
-        
-      if(data.length)
-        table.table.table-striped.table-bordered.table-hover.table-responsive
           thead
-            tr.table-active
-              th #
-              th Nombre
-              th Lugar
-              th IP internet
-              th IP dispositivo
-              th Paga
-              th Pagos
-              th Base
-              th MAC
-              th Equipo
-              th Modalidad
-              th Canal
-              th Inscripción
-              th
-              th
-          tbody      
-            -var counter = 0;
-            each cliente in data
-              tr
-                th(scope="row")= counter++
-                td #{cliente.name}
-                td #{cliente.address}
-                td #{cliente.ipInternet}
-                td #{cliente.ipDevice}
-                td #{cliente.fee}
-                td #{cliente.fees}
-                td #{cliente.base}
-                td #{cliente.mac}
-                td #{cliente.deviceType}
-                td #{cliente.modality}
-                td #{cliente.channel}
-                td #{cliente.startDate}
-                td 
-                  a.button.edit(href="/editar/" + cliente._id) Editar
-                td
-                  form(method="post", action="/eliminar/" + cliente._id)
-                    input.button.delete(type="button", value="Eliminar", onclick="eliminar(this)")
-                    input(type="hidden", name="_method", value="DELETE")
-        script.
-          function eliminar(input) {
-            var deleteOk = confirm('¿Estás seguro de eliminar este registro?');
-            return (deleteOk) ? input.parentNode.submit() : false;
-          }
-      else
-        div.error No tienes contactos que mostrar
+	
+	section.container
+		h1.header= title
+		article.item
+			div
+				a.button.add(href="/agregar-cliente") Agregar
+			label(for='kwd_search') Search:
+			input#kwd_search(type='text', value='')
+
+			if(data.length)
+				table.table.table-striped.table-bordered.table-hover.table-responsive(id="my-table", border="1" style="border-collapse:collapse")
+					thead
+						tr.table-active
+							th #
+							th Nombre
+							th Lugar
+							th IP internet
+							th IP dispositivo
+							th Paga
+							th Pagos
+							th Base
+							th MAC
+							th Equipo
+							th Modalidad
+							th Canal
+							th Inscripción
+							th
+							th
+					tbody      
+						-var counter = 0;
+						each cliente in data
+							tr
+								th(scope="row")= counter++
+								td #{cliente.name}
+								td #{cliente.address}
+								td #{cliente.ipInternet}
+								td #{cliente.ipDevice}
+								td #{cliente.fee}
+								td #{cliente.fees}
+								td #{cliente.base}
+								td #{cliente.mac}
+								td #{cliente.deviceType}
+								td #{cliente.modality}
+								td #{cliente.channel}
+								td #{cliente.startDate}
+								td 
+									a.button.edit(href="/editar/" + cliente._id) Editar
+								td
+									form(method="post", action="/eliminar/" + cliente._id)
+										input.button.delete(type="button", value="Eliminar", onclick="eliminar(this)")
+										input(type="hidden", name="_method", value="DELETE")
+				script.
+					function eliminar(input) {
+						var deleteOk = confirm('¿Estás seguro de eliminar este registro?');
+						return (deleteOk) ? input.parentNode.submit() : false;
+					}
+			else
+				div.error No tienes contactos que mostrar
+		script.
+							$('th').click(function() {
+					var table = $(this).parents('table').eq(0)
+					var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+					this.asc = !this.asc
+					if (!this.asc) {
+						rows = rows.reverse()
+					}
+					for (var i = 0; i < rows.length; i++) {
+						table.append(rows[i])
+					}
+					setIcon($(this), this.asc);
+				})
+
+				function comparer(index) {
+					return function(a, b) {
+						var valA = getCellValue(a, index),
+							valB = getCellValue(b, index)
+						return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+					}
+				}
+
+				function getCellValue(row, index) {
+					return $(row).children('td').eq(index).html()
+				}
+
+				function setIcon(element, asc) {
+					$("th").each(function(index) {
+						$(this).removeClass("sorting");
+						$(this).removeClass("asc");
+						$(this).removeClass("desc");
+					});
+					element.addClass("sorting");
+					if (asc) element.addClass("asc");
+					else element.addClass("desc");
+				}
+		script.
+						// When document is ready: this gets fired before body onload 🙂
+			$(document).ready(function(){
+				// Write on keyup event of keyword input element
+				$("#kwd_search").keyup(function(){
+					// When value of the input is not blank
+					if( $(this).val() != "")
+					{
+						// Show only matching TR, hide rest of them
+						$("#my-table tbody>tr").hide();
+						$("#my-table td:contains-ci('" + $(this).val() + "')").parent("tr").show();
+					}
+					else
+					{
+						// When there is no input or clean again, show everything back
+						$("#my-table tbody>tr").show();
+					}
+				});
+			});
+			// jQuery expression for case-insensitive filter
+			$.extend($.expr[":"], 
+			{
+			    "contains-ci": function(elem, i, match, array) 
+				{
+					return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+				}
+			});
+			script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+			script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+			script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
