@@ -1,0 +1,23 @@
+extends layout.pug
+
+block content
+	section.container
+		h1.header= title
+		article.item
+				input(type="hidden", name="_method", value="PUT")
+				input(type="hidden", name="_id", value=data._id.toString())
+				fieldset
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+				div
+					input.button.add(type="submit", value="Agregar")
+		a.button.show(href="/clientes") Inicio
