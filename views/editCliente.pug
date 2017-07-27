@@ -4,20 +4,32 @@ block content
 	section.container
 		h1.header= title
 		article.item
+			form.form(method="post", action="/actualizar-cliente/" + data._id)
 				input(type="hidden", name="_method", value="PUT")
 				input(type="hidden", name="_id", value=data._id.toString())
 				fieldset
 				div
+						input(type="text", name="name", placeholder="Nombre",value=data.name, required)
 				div
+						input(type="text", name="address", placeholder="Lugar", value=data.address, required)
 				div
+						input(type="text", name="ipInternet", placeholder="IP de internet", value=data.ipInternet, required)
 				div
+						input(type="text", name="ipDevice", placeholder="IP del equipo", value=data.ipDevice, required)
 				div
+						input(type="text", name="fee", placeholder="¿Cuanto Paga?", value=data.fee, required)
 				div
+						input(type="text", name="base", placeholder="Base conectado", value=data.base, required)
 				div
+					input(type="text", name="mac", placeholder="Direccion MAC", value=data.mac,  required)
 				div
+					input(type="text", name="deviceType", placeholder="Tipo de equipo", value=data.deviceType,  required)
 				div
+					input(type="text", name="modality", placeholder="Modalidad", value=data.modality, required)
 				div
+					input(type="text", name="channel", placeholder="Canal", value=data.channel, required )
 				div
+					input(type="text", name="startDate", placeholder="Fecha de inicio", value=data.startDate, required)
 				div
 					input.button.add(type="submit", value="Agregar")
 		a.button.show(href="/clientes") Inicio

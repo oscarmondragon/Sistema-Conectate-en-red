@@ -45,9 +45,9 @@ block content
 								td #{cliente.channel}
 								td #{cliente.startDate}
 								td 
-									a.button.edit(href="/editar/" + cliente._id) Editar
+									a.button.edit(href="/editar-cliente/" + cliente._id) Editar
 								td
-									form(method="post", action="/eliminar/" + cliente._id)
+									form(method="post", action="/eliminar-cliente/" + cliente._id)
 										input.button.delete(type="button", value="Eliminar", onclick="eliminar(this)")
 										input(type="hidden", name="_method", value="DELETE")
 				script.
