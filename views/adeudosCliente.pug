@@ -4,60 +4,73 @@ block content
 		h1.header= title
 		article.item
 			div
-				a.button.add(href="/agregar-cliente") Agregar
 			label(for='kwd_search') Search:
 			input#kwd_search(type='text', value='')
 
-			if(data.length)
-				table.table.table-striped.table-bordered.table-hover.table-responsive(id="my-table", border="1" style="border-collapse:collapse")
+			table.table.table-striped.table-bordered.table-hover.table-responsive(id="my-table", border="1" style="border-collapse:collapse")
 					thead
+						-var meses = ["Enero", "Febrero","Marzo"]
+
 						tr.table-active
-							th #
-							th Nombre
-							th Lugar
-							th IP internet
-							th IP dispositivo
-							th Paga
-							th Pagos
-							th Base
-							th MAC
-							th Equipo
-							th Modalidad
-							th Canal
-							th Inscripción
-							th
-							th
+						each val in ["Años/Meses","Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+								th= val
 					tbody      
 						-var counter = 0;
-						each cliente in data
+						
 							tr
-								td(scope="row")= counter++
-								td #{cliente.name}
-								td #{cliente.address}
-								td #{cliente.ipInternet}
-								td #{cliente.ipDevice}
-								td #{cliente.fee}
-								td 	
-									a.button.edit(href="/adeudos-cliente/" + cliente._id) Ir
-								td #{cliente.base}
-								td #{cliente.mac}
-								td #{cliente.deviceType}
-								td #{cliente.modality}
-								td #{cliente.channel}
-								td #{cliente.startDate}
-								td 
-									a.button.edit(href="/editar-cliente/" + cliente._id) Editar
-								td
-									form(method="post", action="/eliminar-cliente/" + cliente._id)
-										input.button.delete(type="button", value="Eliminar", onclick="eliminar(this)")
-										input(type="hidden", name="_method", value="DELETE")
-				script.
+								td= 2017
+								td= data.fees.a2017.enero
+								td= data.fees.a2017.febrero
+								td= data.fees.a2017.marzo
+								td= data.fees.a2017.abril
+								td= data.fees.a2017.mayo
+								td= data.fees.a2017.junio
+								td= data.fees.a2017.julio
+								td= data.fees.a2017.agosto
+								td= data.fees.a2017.septiembre
+								td= data.fees.a2017.octubre
+								td= data.fees.a2017.noviembre
+								td= data.fees.a2017.diciembre
+							tr
+								td= 2018
+								td= data.fees.a2018.enero
+								td= data.fees.a2018.febrero
+								td= data.fees.a2018.marzo
+								td= data.fees.a2018.abril
+								td= data.fees.a2018.mayo
+								td= data.fees.a2018.junio
+								td= data.fees.a2018.julio
+								td= data.fees.a2018.agosto
+								td= data.fees.a2018.septiembre
+								td= data.fees.a2018.octubre
+								td= data.fees.a2018.noviembre
+								td= data.fees.a2018.diciembre
+							tr
+								td= 2019
+								td= data.fees.a2019.enero
+								td= data.fees.a2019.febrero
+								td= data.fees.a2019.marzo
+								td= data.fees.a2019.abril
+								td= data.fees.a2019.mayo
+								td= data.fees.a2019.junio
+								td= data.fees.a2019.julio
+								td= data.fees.a2019.agosto
+								td= data.fees.a2019.septiembre
+								td= data.fees.a2019.octubre
+								td= data.fees.a2019.noviembre
+								td= data.fees.a2019.diciembre
+
+
+							
+								
+
+			a.button.show(href="/clientes") Atras		
+			script.
 					function eliminar(input) {
 						var deleteOk = confirm('¿Estás seguro de eliminar este registro?');
 						return (deleteOk) ? input.parentNode.submit() : false;
 					}
-			else
-				div.error No tienes contactos que mostrar
+		
 		script.
 							$('th').click(function() {
 					var table = $(this).parents('table').eq(0)
@@ -116,7 +129,7 @@ block content
 			// jQuery expression for case-insensitive filter
 			$.extend($.expr[":"], 
 			{
-			    "contains-ci": function(elem, i, match, array) 
+					"contains-ci": function(elem, i, match, array) 
 				{
 					return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
 				}

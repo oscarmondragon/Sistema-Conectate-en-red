@@ -29,6 +29,51 @@ class ClienteController {
             ipInternet: req.body.ipInternet,
             ipDevice: req.body.ipDevice,
             fee: req.body.fee,
+            fees: {
+                a2017: {
+                    enero: "---",
+                    febrero: "---",
+                    marzo: "---",
+                    abril:"---",
+                    mayo:"---",
+                    junio: "---",
+                    julio:"false",
+                    agosto:"false",
+                    septiembre:"false",
+                    octubre:"false",
+                    noviembre:"false",
+                    diciembre:"false"
+
+                },
+                a2018: {
+                   enero: "---",
+                    febrero: "---",
+                    marzo: "---",
+                    abril:"---",
+                    mayo:"---",
+                    junio: "---",
+                    julio:"false",
+                    agosto:"false",
+                    septiembre:"false",
+                    octubre:"false",
+                    noviembre:"false",
+                    diciembre:"false"
+                },
+                 a2019: {
+                   enero: "---",
+                    febrero: "---",
+                    marzo: "---",
+                    abril:"---",
+                    mayo:"---",
+                    junio: "---",
+                    julio:"false",
+                    agosto:"false",
+                    septiembre:"false",
+                    octubre:"false",
+                    noviembre:"false",
+                    diciembre:"false"
+                }
+            },
             base: req.body.base,
             mac: req.body.mac,
             deviceType: req.body.deviceType,
@@ -56,6 +101,7 @@ class ClienteController {
                     ipInternet: cliente.ipInternet,
                     ipDevice: cliente.ipDevice,
                     fee: cliente.fee,
+                    fees: cliente.fees,
                     base: cliente.base,
                     mac: cliente.mac,
                     deviceType: cliente.deviceType,
@@ -92,6 +138,21 @@ class ClienteController {
         }, (err) => {
             if (err) throw err;
             res.redirect('/clientes')
+        }) : errors.http401(req, res, next);
+    }
+    adeudosCliente(req, res, next) {
+        let _id = req.params._id;
+        console.log(_id);
+        return (req.session.username) ? ClienteModel.findOne({
+            _id: _id
+        }, (err, docs) => {
+            if (err) throw err;
+            console.log(docs);
+            res.render('adeudosCliente', {
+                title: `Pagos de ${docs.name}`,
+                user: req.session.username,
+                data: docs
+            });
         }) : errors.http401(req, res, next);
     }
 }

@@ -19,6 +19,8 @@ block content
 				div
 						input(type="text", name="fee", placeholder="¿Cuanto Paga?", value=data.fee, required)
 				div
+						input(type="text", name="fees", placeholder="Meses pago", value=data.fees, required)
+				div
 						input(type="text", name="base", placeholder="Base conectado", value=data.base, required)
 				div
 					input(type="text", name="mac", placeholder="Direccion MAC", value=data.mac,  required)
@@ -31,5 +33,5 @@ block content
 				div
 					input(type="text", name="startDate", placeholder="Fecha de inicio", value=data.startDate, required)
 				div
-					input.button.add(type="submit", value="Agregar")
+					input.button.add(type="submit", value="Guardar cambios")
 		a.button.show(href="/clientes") Inicio
